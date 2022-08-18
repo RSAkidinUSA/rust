@@ -1020,6 +1020,7 @@ symbols! {
         omit_gdb_pretty_printer_section,
         on,
         on_unimplemented,
+        one,
         oom,
         opaque,
         ops,

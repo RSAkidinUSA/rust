@@ -748,6 +748,10 @@ pub fn eval_condition(
 
                     !eval_condition(mis[0].meta_item().unwrap(), sess, features, eval)
                 }
+                sym::one => mis
+                    .iter()
+                    .filter(|mi| eval_condition(mi.meta_item().unwrap(), sess, features, eval))
+                    .count() == 1,
                 sym::target => {
                     if let Some(features) = features && !features.cfg_target_compact {
                         feature_err(
@@ -780,6 +784,7 @@ pub fn eval_condition(
                 }
             }
         }
+        // FIXME: make a new MetaItemKind for CountedList
         ast::MetaItemKind::Word | MetaItemKind::NameValue(..) if cfg.path.segments.len() != 1 => {
             sess.span_diagnostic
                 .span_err(cfg.path.span, "`cfg` predicate key must be an identifier");
