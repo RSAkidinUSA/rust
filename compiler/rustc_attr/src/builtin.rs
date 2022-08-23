@@ -748,10 +748,12 @@ pub fn eval_condition(
 
                     !eval_condition(mis[0].meta_item().unwrap(), sess, features, eval)
                 }
-                sym::one => mis
-                    .iter()
-                    .filter(|mi| eval_condition(mi.meta_item().unwrap(), sess, features, eval))
-                    .count() == 1,
+                sym::one => {
+                    mis.iter()
+                        .filter(|mi| eval_condition(mi.meta_item().unwrap(), sess, features, eval))
+                        .count()
+                        == 1
+                }
                 sym::target => {
                     if let Some(features) = features && !features.cfg_target_compact {
                         feature_err(
